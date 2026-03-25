@@ -1,0 +1,138 @@
+    /* ESTILOS GENERALES */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f5f0e8, #e1d4c3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 15px 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: #4b3d33;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #4b3d33;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #8a6d56;
+}
+
+/* LOGIN */
+.login-container {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  width: 350px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #4b3d33;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+}
+
+input:focus {
+  border-color: #8a6d56;
+  box-shadow: 0 0 5px rgba(138,109,86,0.5);
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #8a6d56;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background: #6c5443;
+}
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.google-btn, .facebook-btn {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.google-btn:hover {
+  background: #f8f8f8;
+}
+
+.facebook-btn {
+  background: #1877f2;
+  color: white;
+  border: none;
+}
+
+.facebook-btn:hover {
+  background: #0f5dc8;
+}
+
+p {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+a {
+  color: #8a6d56;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}

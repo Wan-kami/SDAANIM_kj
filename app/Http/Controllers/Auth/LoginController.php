@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class LoginController extends Controller
+{
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'Usu_documento' => ['required', 'integer'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt(['Usu_documento' => $credentials['Usu_documento'], 'password' => $credentials['password']])) {
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+            
+            session()->flash('welcome', '¡Bienvenido ' . $user->name . '! Has ingresado como ' . $user->role);
+
+            // Redirect based on role
+            return match ($user->role) {
+                'Administrador' => redirect()->route('admin.dashboard'),
+                'Voluntario' => redirect()->route('volunteer.dashboard'),
+                'Veterinario' => redirect()->route('vet.dashboard'),
+                'Adoptante' => redirect()->route('adopter.dashboard'),
+                default => redirect()->to('/'),
+            };
+        }
+
+        return back()->withErrors([
+            'Usu_documento' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
+        ])->onlyInput('Usu_documento');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+}

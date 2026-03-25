@@ -1,0 +1,91 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\LoginController;
+
+use App\Models\Animal;
+use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\AdoptionController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DonationController;
+use App\Http\Controllers\MedicalHistoryController;
+use App\Http\Controllers\ProfileController;
+
+// --- GUEST / PUBLIC ROUTES ---
+Route::get('/', function () {
+    $animals = Animal::latest()->take(6)->get();
+    return view('welcome', compact('animals'));
+})->name('welcome');
+
+Route::get('/quienes-somos', function () { return view('public.about'); })->name('about');
+Route::get('/adopta', [AnimalController::class, 'publicIndex'])->name('adopta');
+Route::get('/animal/{id}', [AnimalController::class, 'show'])->name('animal.show');
+Route::get('/productos', [ProductController::class, 'publicIndex'])->name('products.public');
+Route::get('/contacto', function () { return view('public.contact'); })->name('contact');
+
+// --- AUTHENTICATION ---
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/registrar', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/registrar', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
+
+// --- PROTECTED ROUTES (AUTH) ---
+Route::middleware(['auth'])->group(function () {
+    
+    // REDIRECTION ROUTE (Universal Dashboard)
+    Route::get('/dashboard', function () {
+        return match (Auth::user()->role) {
+            'Administrador' => redirect()->route('admin.dashboard'),
+            'Voluntario' => redirect()->route('volunteer.dashboard'),
+            'Veterinario' => redirect()->route('vet.dashboard'),
+            'Adoptante' => redirect()->route('adopter.dashboard'),
+            default => redirect('/'),
+        };
+    })->name('dashboard');
+
+    // ADOPTER PANEL
+    Route::prefix('adopter')->name('adopter.')->group(function () {
+        Route::get('/dashboard', function () { return view('home.adopter'); })->name('dashboard');
+        Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile');
+        Route::post('/perfil', [ProfileController::class, 'update']);
+        Route::get('/mis-solicitudes', [AdoptionController::class, 'userRequests'])->name('requests');
+        Route::get('/solicitar-adopcion/{animal_id}', [AdoptionController::class, 'create'])->name('adoption.create');
+        Route::post('/solicitar-adopcion', [AdoptionController::class, 'store'])->name('adoption.store');
+        Route::get('/donar', [DonationController::class, 'create'])->name('donation.create');
+        Route::post('/donar', [DonationController::class, 'store'])->name('donation.store');
+    });
+
+    // VOLUNTEER PANEL
+    Route::prefix('/volunteer')->name('volunteer.')->group(function () {
+        Route::get('/dashboard', function () { return view('home.volunteer'); })->name('dashboard');
+        Route::get('/tareas', [TaskController::class, 'index'])->name('tasks');
+        Route::post('/tareas/{id}/completar', [TaskController::class, 'complete'])->name('tasks.complete');
+    });
+
+    // VET PANEL
+    Route::prefix('vet')->name('vet.')->group(function () {
+        Route::get('/dashboard', function () { return view('home.vet'); })->name('dashboard');
+        Route::get('/animales', [AnimalController::class, 'index'])->name('animals');
+        Route::get('/historial/{animal_id}', [MedicalHistoryController::class, 'index'])->name('history');
+        Route::post('/historial', [MedicalHistoryController::class, 'store'])->name('history.store');
+    });
+
+    // ADMIN PANEL
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', function () { return view('admin.dashboard'); })->name('dashboard');
+        Route::resource('animals', AnimalController::class);
+        Route::resource('products', ProductController::class);
+        Route::get('/solicitudes', [AdoptionController::class, 'adminIndex'])->name('requests.index');
+        Route::post('/solicitudes/{id}/approve', [AdoptionController::class, 'approve'])->name('requests.approve');
+        Route::get('/usuarios', [ProfileController::class, 'adminIndex'])->name('users.index');
+        
+        // Admin Task management
+        Route::get('/tareas', [TaskController::class, 'adminIndex'])->name('tasks.index');
+        Route::post('/tareas', [TaskController::class, 'store'])->name('tasks.store');
+    });
+
+});

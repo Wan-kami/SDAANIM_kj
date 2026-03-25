@@ -1,0 +1,315 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+/* --- HEADER + NAVBAR --- */
+/* Header general */
+.main-header {
+    background-color: #fce8d9; 
+    padding: 29px 40px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de logo, nav, buscador e icono en una sola fila */
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Logo alineado */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #2d7d46; /* verde principal */
+   
+}
+
+.logo img {
+    height: 80px;
+}
+
+.logo span {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.8rem;
+    color: #2d7d46;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Menú centrado */
+.nav-menu {
+    display: flex;
+    gap: 25px;
+    padding: 0.5%;
+    
+}
+
+.nav-menu a,
+.nav-menu .dropbtn {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.nav-menu a:hover,
+.nav-menu .dropbtn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown */
+.dropdown {
+    margin-top: 1.1%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 140px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Buscador */
+.search-container {
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    margin-right:3%;
+   margin-top: 2%;
+ 
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 4px;
+    font-size: 14px;
+    width: -150px;
+}
+
+.clear-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Icono usuario */
+.usuario img {
+    width: 30px;
+    cursor: pointer;
+    margin-left: 40%;
+    margin-top: -115%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    top: 25px;
+}
+
+.nav-right .filtro {
+    padding: 10px 20px;
+    border: 2px solid #2d7d46;
+    background: transparent;
+    border-radius: 25px;
+    font-size: 1rem;
+    color: #369153;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-right .filtro:hover,
+.nav-right .filtro.active {
+    background: #2d7d46;
+    color: #fff;
+}
+
+
+
+/* --- SECCIÓN DONACIONES --- */
+
+.donaciones {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+/* Banner superior */
+.banner-dona {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(to bottom, #deecde, #ffffff);
+  border-radius: 12px;
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: visible;
+  height: 140px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.banner-dona h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: #2e5f3e;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.banner-dona img {
+  position: absolute;
+  bottom: -36px;
+  right: -35px;
+  height: 200px;
+  object-fit: contain;
+}
+
+/* Contenido principal */
+.contenido-dona {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Caja descripción */
+.descripcion {
+  flex: 1;
+  background: #fcefdc;
+  padding: 25px;
+  border-radius: 12px;
+  min-width: 280px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.descripcion h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.descripcion span {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #000;
+}
+
+/* Métodos de pago */
+.grid-metodos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  flex: 1;
+  align-items: stretch;
+}
+
+.metodo {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metodo:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.metodo img {
+  max-width: 120px;
+  height: auto;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.metodo h3 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.metodo p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Dropdown (si lo usas después) */
+.dropdown {
+  position: relative;
+}
+
+/* Adaptable a móviles */
+@media (max-width: 700px) {
+  .banner-dona {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+    padding: 25px 15px;
+  }
+
+  .banner-dona img {
+    position: static;
+    height: 150px;
+    margin-top: 15px;
+  }
+
+  .contenido-dona {
+    flex-direction: column;
+  }
+}
+
+
+footer {
+    margin-top: 40px;
+    background: #757575;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}

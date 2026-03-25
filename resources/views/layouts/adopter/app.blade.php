@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title') | JKD</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @yield('styles')
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        .notif-toggle { background: none; border: none; font-size: 20px; cursor: pointer; }
+        .notif-sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: #fff; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transition: right 0.4s ease; z-index: 1000; padding: 20px; }
+        .notif-sidebar.active { right: 0; }
+        .notif-sidebar h3 { text-align: center; color: #2d7d46; margin-bottom: 20px; }
+        .notif-sidebar a { display: block; padding: 12px; color: #333; border-bottom: 1px solid #eee; border-radius: 5px; }
+        .notif-sidebar a:hover { background-color: #f1f1f1; }
+        .close-btn { position: absolute; top: 10px; right: 15px; background: transparent; border: none; font-size: 20px; cursor: pointer; color: #2d7d46; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-top">
+            <div class="logo">
+                <img src="{{ asset('img/a.png') }}" alt="logo">
+                <span>Esperanza Animal BQ</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ route('about') }}">Quienes somos</a>
+                <a href="{{ route('adopta') }}">Adopta</a>
+                <a href="{{ route('products.public') }}">Productos</a>
+                <a href="{{ route('adopter.donation.create') }}">Dona</a>
+            </nav>
+
+            <div class="search-container">
+                <nav class="nav-right">
+                    @auth
+                        <span class="usuario-nombre">{{ Auth::user()->name }}</span>
+                        <button class="notif-toggle" onclick="toggleSidebar()">🔔</button>
+                        <form action="{{ route('logout') }}" method="POST" style="display:inline; margin-left:10px;">
+                            @csrf
+                            <button type="submit" class="filtro">Cerrar sesión</button>
+                        </form>
+                    @else
+                        <button onclick="window.location.href='{{ route('login') }}'" class="filtro">Iniciar Sesión</button>
+                        <button onclick="window.location.href='{{ route('register') }}'" class="filtro">Registrarse</button>
+                    @endauth
+                </nav>
+                <div class="usuario">
+                    <a href="#"><img src="{{ asset('img/usuario.png') }}" alt="Usuario" id="usuario-icon"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="notifSidebar" class="notif-sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
+        <h3>Notificaciones</h3>
+        <a href="{{ route('adopter.profile') }}">📋 Mi Perfil</a>
+        <a href="{{ route('adopter.requests') }}">🐾 Mis Solicitudes</a>
+    </div>
+
+    <main>
+        @if(session('success'))
+            <div style="background: #d4edda; color: #155724; padding: 15px; margin: 20px auto; max-width: 1100px; border-radius: 8px; text-align: center; font-weight: bold;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('welcome'))
+            <script>
+                alert("{{ session('welcome') }}");
+            </script>
+        @endif
+
+        @yield('content')
+    </main>
+
+    <footer id="contacto">
+        <p>📞 Contáctanos: contacto@adoptaya.com | 📍 Barranquilla, Colombia</p>
+        <p>© 2025 AdoptaYa - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("notifSidebar").classList.toggle("active");
+        }
+    </script>
+</body>
+</html>
