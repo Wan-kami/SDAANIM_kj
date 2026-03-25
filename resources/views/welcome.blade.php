@@ -45,7 +45,7 @@
 
         // 📍 Coordenadas (ejemplo Barranquilla)
         const ubicacion = {
-            lat: 10.92075833283207,
+            lat: 10.920758332832074,
             lng: -74.824875070815
         };
 
