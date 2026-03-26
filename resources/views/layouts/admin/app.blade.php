@@ -17,10 +17,7 @@
             overflow-x: hidden;
         }
 
-        /* -----------------------------
-           HEADER ADMIN
-        ----------------------------- */
-
+        /* HEADER ADMIN */
         .admin-header {
             background: linear-gradient(90deg, #2e8b57, #4caf50);
             color: white;
@@ -48,10 +45,7 @@
             color: black;
         }
 
-        /* -----------------------------
-           BOTÓN NOTIFICACIONES
-        ----------------------------- */
-
+        /* BOTÓN NOTIFICACIONES */
         .notif-toggle {
             background-color: white;
             color: #2e8b57;
@@ -67,10 +61,7 @@
             background-color: #f0f0f0;
         }
 
-        /* -----------------------------
-           BARRA LATERAL DERECHA (Notificaciones)
-        ----------------------------- */
-
+        /* BARRA LATERAL DERECHA (Notificaciones) */
         .notif-sidebar {
             position: fixed;
             top: 0;
@@ -120,10 +111,7 @@
             color: #2e8b57;
         }
 
-        /* -----------------------------
-           MAIN CONTENT
-        ----------------------------- */
-
+        /* MAIN CONTENT */
         main {
             padding: 40px 20px;
             max-width: 1200px;
@@ -131,10 +119,7 @@
             min-height: 70vh;
         }
 
-        /* -----------------------------
-           FOOTER
-        ----------------------------- */
-
+        /* FOOTER */
         footer {
             background: #2e8b57;
             color: white;
@@ -211,6 +196,19 @@
             <div class="alert-success">
                 {{ session('success') }}
             </div>
+        @endif
+
+        {{-- ✅ Bloque para mostrar notificación de bienvenida --}}
+        @if(session('welcome'))
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                Swal.fire({
+                    title: 'Bienvenido',
+                    text: "{{ session('welcome') }}",
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                });
+            </script>
         @endif
 
         @yield('content')
