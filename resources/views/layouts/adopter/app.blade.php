@@ -27,7 +27,7 @@
             </div>
 
             <nav class="nav-menu">
-                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ url('/dashboard') }}">Inicio</a>
                 <a href="{{ route('about') }}">Quienes somos</a>
                 <a href="{{ route('adopta') }}">Adopta</a>
                 <a href="{{ route('products.public') }}">Productos</a>
