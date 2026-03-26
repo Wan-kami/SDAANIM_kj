@@ -14,6 +14,7 @@ use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\InscriptionController;
+use App\Http\Controllers\NotificationController;
 
 // --- GUEST / PUBLIC ROUTES ---
 Route::get('/', function () {
@@ -37,6 +38,10 @@ Route::post('/registrar', [App\Http\Controllers\Auth\RegisterController::class, 
 
 // --- PROTECTED ROUTES (AUTH) ---
 Route::middleware(['auth'])->group(function () {
+    
+    // NOTIFICATIONS
+    Route::get('/notificaciones', [NotificationController::class, 'index'])->name('notifications');
+    Route::delete('/notificaciones/{id}', [NotificationController::class, 'delete'])->name('notifications.delete');
     
     // PROFILE
     Route::get('/mi-perfil', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -70,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', function () { return view('home.volunteer'); })->name('dashboard');
         Route::get('/tareas', [TaskController::class, 'index'])->name('tasks');
         Route::post('/tareas/{id}/completar', [TaskController::class, 'complete'])->name('tasks.complete');
+        Route::post('/tareas/{id}/estado', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
         
         // Availability
         Route::get('/disponibilidad', [AvailabilityController::class, 'index'])->name('availability');
@@ -97,6 +103,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('products', ProductController::class);
         Route::get('/solicitudes', [AdoptionController::class, 'adminIndex'])->name('requests.index');
         Route::post('/solicitudes/{id}/approve', [AdoptionController::class, 'approve'])->name('requests.approve');
+        Route::post('/solicitudes/{id}/assign-volunteer', [AdoptionController::class, 'assignVolunteer'])->name('requests.assignVolunteer');
         Route::get('/usuarios', [ProfileController::class, 'adminIndex'])->name('users.index');
         
         // Admin Task management
