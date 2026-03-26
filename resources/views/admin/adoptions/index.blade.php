@@ -12,61 +12,69 @@
         </div>
     @endif
 
-    <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-top: 20px;">
-        <thead style="background: #2e8b57; color: white;">
-            <tr>
-                <th style="padding: 12px;">Fecha</th>
-                <th style="padding: 12px;">Solicitante</th>
-                <th style="padding: 12px;">Animal</th>
-                <th style="padding: 12px;">Estado</th>
-                <th style="padding: 12px;">Voluntario Asignado</th>
-                <th style="padding: 12px;">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($requests as $request)
-                <tr style="border-bottom: 1px solid #eee; text-align: center;">
-                    <td style="padding: 12px;">{{ $request->Soli_fecha }}</td>
-                    <td style="padding: 12px;">{{ $request->user->name }}</td>
-                    <td style="padding: 12px;">{{ $request->animal->Anim_nombre }}</td>
-                    <td style="padding: 12px;">
-                        <span style="padding: 4px 10px; border-radius: 20px; font-size: 0.85em; font-weight: bold; 
-                            background: {{ $request->Soli_estado == 'Pendiente' ? '#fff3cd' : ($request->Soli_estado == 'Aprobada' ? '#d4edda' : '#f8d7da') }};
-                            color: {{ $request->Soli_estado == 'Pendiente' ? '#856404' : ($request->Soli_estado == 'Aprobada' ? '#155724' : '#721c24') }};">
-                            {{ $request->Soli_estado }}
-                        </span>
-                    </td>
-                    <td style="padding: 12px;">
-                        <form action="{{ route('admin.requests.approve', $request->Soli_id) }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="estado" value="{{ $request->Soli_estado }}">
-                            <select name="voluntario_doc" onchange="this.form.submit()" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
-                                <option value="">Sin asignar</option>
-                                @foreach($volunteers as $vol)
-                                    <option value="{{ $vol->Usu_documento }}" {{ $request->Soli_voluntario == $vol->Usu_documento ? 'selected' : '' }}>
-                                        {{ $vol->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </form>
-                    </td>
-                    <td style="padding: 12px;">
-                        <div style="display: flex; gap: 5px; justify-content: center;">
-                            <form action="{{ route('admin.requests.approve', $request->Soli_id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="estado" value="Aprobada">
-                                <button type="submit" style="background: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Aprobar</button>
-                            </form>
-                            <form action="{{ route('admin.requests.approve', $request->Soli_id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="estado" value="Rechazada">
-                                <button type="submit" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Rechazar</button>
-                            </form>
-                        </div>
-                    </td>
+<div class="premium-card">
+    <h3 style="margin-bottom: 25px; color: #1e293b;">Bandeja de Entrada: Solicitudes</h3>
+    <div style="overflow-x: auto;">
+        <table class="premium-table">
+            <thead>
+                <tr>
+                    <th>Fecha Solicitud</th>
+                    <th>Adoptante</th>
+                    <th>Animal</th>
+                    <th>Estado</th>
+                    <th>Asignar Verificador</th>
+                    <th style="text-align: center;">Decisión Final</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach($requests as $request)
+                    <tr>
+                        <td style="font-size: 0.9em; color: #64748b;">{{ \Carbon\Carbon::parse($request->Soli_fecha)->format('d M, Y') }}</td>
+                        <td style="font-weight: 700;">{{ $request->user->name }}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="{{ asset('img/' . ($request->animal->Anim_foto ?? 'placeholder.jpg')) }}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">
+                                <span>{{ $request->animal->Anim_nombre }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="premium-btn" style="background: {{ $request->Soli_estado == 'Pendiente' ? '#fef3c7' : ($request->Soli_estado == 'Aprobada' ? '#dcfce7' : '#fee2e2') }}; color: {{ $request->Soli_estado == 'Pendiente' ? '#92400e' : ($request->Soli_estado == 'Aprobada' ? '#166534' : '#991b1b') }}; padding: 4px 12px; font-size: 0.8em; border-radius: 20px;">
+                                {{ $request->Soli_estado }}
+                            </span>
+                        </td>
+                        <td>
+                            <form action="{{ route('admin.requests.approve', $request->Soli_id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="estado" value="{{ $request->Soli_estado }}">
+                                <select name="voluntario_doc" onchange="this.form.submit()" style="padding: 8px 12px; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 0.9em; outline: none; transition: 0.3s; width: 100%;">
+                                    <option value="">-- Seleccionar Voluntario --</option>
+                                    @foreach($volunteers as $vol)
+                                        <option value="{{ $vol->Usu_documento }}" {{ $request->Soli_voluntario == $vol->Usu_documento ? 'selected' : '' }}>
+                                            👤 {{ $vol->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </td>
+                        <td style="text-align: center;">
+                            <div style="display: flex; gap: 8px; justify-content: center;">
+                                <form action="{{ route('admin.requests.approve', $request->Soli_id) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="estado" value="Aprobada">
+                                    <button type="submit" class="premium-btn" style="background: #22c55e; color: white; padding: 6px 14px; font-size: 0.85em;">Aprobar</button>
+                                </form>
+                                <form action="{{ route('admin.requests.approve', $request->Soli_id) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="estado" value="Rechazada">
+                                    <button type="submit" class="premium-btn" style="background: #ef4444; color: white; padding: 6px 14px; font-size: 0.85em;">Rechazar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 </div>
 @endsection
