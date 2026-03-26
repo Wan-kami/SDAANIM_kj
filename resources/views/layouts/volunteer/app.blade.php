@@ -9,24 +9,139 @@
     <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
     @yield('styles')
     <style>
-        body { margin: 0; font-family: 'Open Sans', sans-serif; background: #f0f4f8; color: #333; overflow-x: hidden; }
-        .vol-header { background: linear-gradient(135deg, #005f9e, #007acc); padding: 15px 40px; }
-        .logo-text { font-family: 'Pacifico', cursive; font-size: 1.8em; color: white !important; margin: 0; }
-        
-        .notif-toggle { background-color: white; color: #007acc; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .notif-sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: #fff; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transition: right 0.4s ease; z-index: 1000; padding: 20px; }
-        .notif-sidebar.active { right: 0; }
-        .notif-sidebar h3 { text-align: center; color: #007acc; margin-bottom: 20px; }
-        .notif-sidebar a { display: block; padding: 12px; color: #333; border-bottom: 1px solid #eee; border-radius: 5px; }
-        .notif-sidebar a:hover { background-color: #e0f0ff; }
-        .close-btn { position: absolute; top: 10px; right: 15px; background: transparent; border: none; font-size: 20px; cursor: pointer; color: #007acc; }
+        /* Estilos generales */
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            overflow-x: hidden;
+        }
 
-        .sidebar-vol { background: rgba(255,255,255,0.98); backdrop-filter: blur(15px); border-right: 5px solid #007acc; }
-        .sidebar-vol a { padding: 15px 20px; border-radius: 12px; margin-bottom: 8px; font-weight: 600; color: #444; }
-        .sidebar-vol a:hover { background: #e6f2ff; color: #007acc; transform: translateX(8px); }
+        /* Header */
+        .vol-header {
+            background: linear-gradient(135deg, #005f9e, #007acc);
+            padding: 15px 40px;
+        }
 
-        main { padding: 40px 20px; max-width: 1200px; margin: 0 auto; min-height: 80vh; }
-        footer { background: #007acc; color: white; text-align: center; padding: 15px 0; margin-top: 40px; font-size: 0.9em; }
+        .logo-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8em;
+            color: white !important;
+            margin: 0;
+        }
+
+        /* Botón de notificaciones */
+        .notif-toggle {
+            background-color: white;
+            color: #007acc;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        /* Sidebar de notificaciones */
+        .notif-sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+            transition: right 0.4s ease;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .notif-sidebar.active {
+            right: 0;
+        }
+
+        .notif-sidebar h3 {
+            text-align: center;
+            color: #007acc;
+            margin-bottom: 20px;
+        }
+
+        .notif-sidebar a {
+            display: block;
+            padding: 12px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            border-radius: 5px;
+        }
+
+        .notif-sidebar a:hover {
+            background-color: #e0f0ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #007acc;
+        }
+
+        /* Sidebar de voluntarios */
+        .sidebar-vol {
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(15px);
+            border-right: 5px solid #007acc;
+        }
+
+        .sidebar-vol a {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .sidebar-vol a:hover {
+            background: #e6f2ff;
+            color: #007acc;
+            transform: translateX(8px);
+        }
+
+        /* Contenido principal */
+        main {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 80vh;
+        }
+
+        /* Pie de página */
+        footer {
+            background: #007acc;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .vol-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #005f9e, #007acc);
+            padding: 15px 40px;
+        }
+
+        .vol-header > div:last-child {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
