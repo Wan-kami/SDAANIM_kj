@@ -124,4 +124,33 @@ class AdoptionController extends Controller
 
         return back()->with('success', "Estado de la solicitud actualizado a {$data['estado']}.");
     }
+
+    public function assignVolunteer(Request $request, $id)
+    {
+        $request->validate([
+            'Usu_documento' => 'required|exists:users,Usu_documento'
+        ]);
+
+        $solicitud = AdoptionRequest::findOrFail($id);
+        $solicitud->Soli_voluntario = $request->Usu_documento;
+        $solicitud->save();
+
+        Task::create([
+            'Usu_documento' => $request->Usu_documento,
+            'Tar_titulo' => "Seguimiento Adopción: {$solicitud->animal->Anim_nombre}",
+            'Tar_descripcion' => "Realizar seguimiento a la solicitud de adopción de {$solicitud->user->name}.",
+            'Tar_fecha_limite' => now()->addDays(3),
+            'Tar_fecha_asignacion' => now(),
+            'Tar_estado' => 'Pendiente',
+        ]);
+
+        Notification::create([
+            'Usu_documento' => $request->Usu_documento,
+            'Noti_mensaje' => "Se te ha asignado el seguimiento de la adopción de {$solicitud->animal->Anim_nombre}.",
+            'Noti_fecha' => now(),
+            'Noti_link' => route('volunteer.tasks'),
+        ]);
+
+        return back()->with('success', 'Voluntario asignado correctamente.');
+    }
 }
