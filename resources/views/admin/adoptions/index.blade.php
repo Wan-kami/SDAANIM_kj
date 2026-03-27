@@ -91,7 +91,7 @@
             @csrf
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 700;">Voluntario</label>
-                <select name="voluntario_doc" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; outline: none;">
+                <select name="Usu_documento" required>
                     <option value="">-- Seleccionar Voluntario --</option>
                     @foreach($volunteers as $vol)
                         <option value="{{ $vol->Usu_documento }}">👤 {{ $vol->name }}</option>
