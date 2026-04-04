@@ -18,7 +18,7 @@ class TaskController extends Controller
             ->latest()
             ->get();
 
-        return view('volunteer.tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
