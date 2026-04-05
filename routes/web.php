@@ -47,10 +47,11 @@ Route::post('/verificar', [RegisterController::class, 'verificarCodigo'])->name(
 // --- PROTECTED ROUTES (AUTH) ---
 Route::middleware(['auth'])->group(function () {
 
-
     // PROFILE
     Route::get('/mi-perfil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mi-perfil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/mi-perfil/password', [ProfileController::class, 'changePassword'])->name('profile.password');
+    Route::post('/mi-perfil/deactivate', [ProfileController::class, 'deactivate'])->name('profile.deactivate');
 
     // REDIRECTION ROUTE (Universal Dashboard)
     Route::get('/dashboard', function () {
@@ -85,10 +86,7 @@ Route::middleware(['auth'])->group(function () {
         // Actualizar estado de la tarea
         Route::patch('/tareas/{id}/estado', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
 
-        // Marcar/desmarcar como observado
-        Route::patch('/tareas/{id}/observado', [TaskController::class, 'toggleObserved'])->name('tasks.toggleObserved');
-
-        // Completar tarea
+        // Completar tarea (con comentario)
         Route::post('/tareas/{id}/completar', [TaskController::class, 'complete'])->name('tasks.complete');
 
         // Availability
@@ -105,6 +103,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/animales', [AnimalController::class, 'index'])->name('animals');
         Route::get('/historial/{animal_id}', [MedicalHistoryController::class, 'index'])->name('history');
         Route::post('/historial', [MedicalHistoryController::class, 'store'])->name('history.store');
+
+        // Vet tasks (tareas asignadas por el admin)
+        Route::get('/tareas', [TaskController::class, 'index'])->name('tasks');
+        Route::patch('/tareas/{id}/estado', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+        Route::post('/tareas/{id}/completar', [TaskController::class, 'complete'])->name('tasks.complete');
 
         // Availability
         Route::get('/disponibilidad', [AvailabilityController::class, 'index'])->name('availability');
@@ -127,23 +130,30 @@ Route::middleware(['auth'])->group(function () {
         // Admin Task management
         Route::get('/tareas', [TaskController::class, 'adminIndex'])->name('tasks.index');
         Route::post('/tareas', [TaskController::class, 'store'])->name('tasks.store');
+        Route::post('/tareas/{task}/assign-volunteer', [TaskController::class, 'assignVolunteer'])->name('tasks.assignVolunteer');
 
         // Inscriptions (Vet/Volunteer requests)
         Route::get('/inscripciones', [InscriptionController::class, 'adminIndex'])->name('inscriptions.index');
         Route::post('/inscripciones/{id}/approve', [InscriptionController::class, 'approve'])->name('inscriptions.approve');
         Route::post('/inscripciones/{id}/reject', [InscriptionController::class, 'reject'])->name('inscriptions.reject');
+
+        // Donaciones admin view
+        Route::get('/donaciones', [DonationController::class, 'adminIndex'])->name('donations.index');
     });
 
-    // Mostrar tareas admin
-    Route::get('/admin/tareas', [TaskController::class, 'adminIndex'])->name('admin.tasks.index')->middleware('auth');
-
-    // Asignar voluntario a una tarea
-    Route::post('/admin/tareas/{task}/assign-volunteer', [TaskController::class, 'assignVolunteer'])
-        ->name('admin.tasks.assignVolunteer')
-        ->middleware('auth');
-
-    // Notificaciones (puede ser para todos los roles, mostrando solo las relevantes)
+    // Notificaciones (para todos los roles, mostrando solo las del usuario actual)
     Route::get('/notifications', function () {
-        return view('notifications.index');
+        $notifications = \App\Models\Notification::where('Usu_documento', Auth::user()->Usu_documento)
+            ->latest('Noti_fecha')
+            ->get();
+        return view('notifications.index', compact('notifications'));
     })->name('notifications');
+
+    Route::delete('/notifications/{id}', function ($id) {
+        $notification = \App\Models\Notification::where('Noto_id', $id)
+            ->where('Usu_documento', Auth::user()->Usu_documento)
+            ->firstOrFail();
+        $notification->delete();
+        return back()->with('success', 'Notificación eliminada.');
+    })->name('notifications.delete');
 });
