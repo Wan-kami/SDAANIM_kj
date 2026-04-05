@@ -38,6 +38,7 @@ class User extends Authenticatable
         'Usu_telefono',
         'role',
         'Usu_direccion',
+        'Usu_foto',
         'password',
         'status',
     ];
