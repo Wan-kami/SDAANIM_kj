@@ -31,10 +31,18 @@ Route::get('/contacto', function () {
     return view('public.contact');
 })->name('contact');
 
+Route::get('/voluntario', [InscriptionController::class, 'createVolunteer'])->name('inscriptions.volunteer');
+Route::get('/veterinario', [InscriptionController::class, 'createVeterinarian'])->name('inscriptions.veterinarian');
+Route::post('/inscripciones', [InscriptionController::class, 'store'])->name('inscriptions.store');
+
 // --- AUTHENTICATION ---
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::post('/password/forgot', [App\Http\Controllers\Auth\PasswordResetController::class, 'sendResetCode'])->name('password.forgot');
+Route::post('/password/verify-code', [App\Http\Controllers\Auth\PasswordResetController::class, 'verifyResetCode'])->name('password.verify');
+Route::post('/password/reset', [App\Http\Controllers\Auth\PasswordResetController::class, 'reset'])->name('password.reset');
 
 Route::get('/registrar', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/registrar', [RegisterController::class, 'register'])->name('register.custom');

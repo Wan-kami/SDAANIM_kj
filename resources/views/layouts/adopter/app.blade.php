@@ -78,7 +78,15 @@
                 <a href="{{ route('about') }}">Quienes somos</a>
                 <a href="{{ route('adopta') }}">Adopta</a>
                 <a href="{{ route('products.public') }}">Productos</a>
+                <a href="{{ route('adopter.requests') }}">Solicitudes</a>
                 <a href="{{ route('adopter.donation.create') }}">Dona</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Apóyanos ▾</a>
+                    <div class="dropdown-content">
+                        <a href="{{ route('inscriptions.volunteer') }}">Voluntario</a>
+                        <a href="{{ route('inscriptions.veterinarian') }}">Veterinario</a>
+                    </div>
+                </div>
             </nav>
 
             <div class="search-container">

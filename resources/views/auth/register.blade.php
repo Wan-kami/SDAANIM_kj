@@ -20,9 +20,17 @@
 
             <nav class="nav-menu">
                 <a href="{{ url('/') }}">Inicio</a>
-                <a href="#">Quienes somos</a>
-                <a href="#">Adopta</a>
-                <a href="#">Dona</a>
+                <a href="{{ route('about') }}">Quienes somos</a>
+                <a href="{{ route('adopta') }}">Adopta</a>
+                <a href="{{ route('products.public') }}">Productos</a>
+                <a href="{{ route('adopter.donation.create') }}">Dona</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Apóyanos ▾</a>
+                    <div class="dropdown-content">
+                        <a href="{{ route('inscriptions.volunteer') }}">Voluntario</a>
+                        <a href="{{ route('inscriptions.veterinarian') }}">Veterinario</a>
+                    </div>
+                </div>
             </nav>
 
             <div class="search-container">
@@ -82,18 +90,30 @@
                 required />
             @error('Usu_direccion') <p style="color:red; font-size:0.8rem;">{{ $message }}</p> @enderror
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                required />
+            <div style="position: relative; width: 100%; margin-bottom: 0.85rem;">
+                <input
+                    type="password"
+                    name="password"
+                    id="register-password"
+                    placeholder="Contraseña"
+                    required
+                    style="width: 100%; padding-right: 42px;"
+                />
+                <button type="button" onclick="togglePasswordVisibility('register-password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: transparent; cursor: pointer; font-size: 1.1rem;">👁️</button>
+            </div>
             @error('password') <p style="color:red; font-size:0.8rem;">{{ $message }}</p> @enderror
 
-            <input
-                type="password"
-                name="password_confirmation"
-                placeholder="Confirmar Contraseña"
-                required />
+            <div style="position: relative; width: 100%; margin-bottom: 0.85rem;">
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    id="register-password_confirmation"
+                    placeholder="Confirmar Contraseña"
+                    required
+                    style="width: 100%; padding-right: 42px;"
+                />
+                <button type="button" onclick="togglePasswordVisibility('register-password_confirmation', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: transparent; cursor: pointer; font-size: 1.1rem;">👁️</button>
+            </div>
 
             <button type="submit" class="btn">Registrarse</button>
         </form>
@@ -107,6 +127,20 @@
         <br>
         <a href="{{ url('/') }}" class="btn volver-btn">Regresar</a>
     </div>
+
+    <script>
+        function togglePasswordVisibility(fieldId, button) {
+            const input = document.getElementById(fieldId);
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+    </script>
     @if(session('mostrar_modal') || session('error'))
     <div class="modal-overlay">
         <div class="modal-box">
