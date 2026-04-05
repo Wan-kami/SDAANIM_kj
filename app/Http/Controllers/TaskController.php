@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Availability;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User; // <--- Asegúrate de tener esta línea
+use App\Models\User;
 
 class TaskController extends Controller
 {
     /**
-     * Mostrar tareas para el voluntario actual.
+     * Mostrar tareas para el voluntario/veterinario actual.
      */
     public function index()
     {
@@ -22,9 +23,9 @@ class TaskController extends Controller
     }
 
     /**
-     * MARCAR tarea como completada por voluntario.
+     * MARCAR tarea como completada por voluntario/veterinario.
      */
-    public function complete($id)
+    public function complete(Request $request, $id)
     {
         $task = Task::findOrFail($id);
 
@@ -32,20 +33,23 @@ class TaskController extends Controller
             abort(403, 'No autorizado.');
         }
 
-        $task->update(['Tar_estado' => 'Completada']);
+        $task->update([
+            'Tar_estado' => 'Completada',
+            'Tar_comentario' => $request->get('comentario'),
+        ]);
 
         return back()->with('success', 'Tarea marcada como completada.');
     }
 
     /**
-     * ACTUALIZAR estado de la tarea (opcional: pendiente, en proceso, etc.)
+     * ACTUALIZAR estado de la tarea (pendiente, observación, en proceso, etc.)
      */
     public function updateStatus(Request $request, $id)
     {
         $task = Task::findOrFail($id);
 
         $request->validate([
-            'Tar_estado' => 'required|in:Pendiente,En Proceso,Completada',
+            'Tar_estado' => 'required|in:Pendiente,Observación,En Proceso,Completada',
         ]);
 
         $task->update(['Tar_estado' => $request->Tar_estado]);
@@ -54,22 +58,28 @@ class TaskController extends Controller
     }
 
     /**
-     * LISTAR todas las tareas para el ADMIN
+     * LISTAR todas las tareas para el ADMIN, con voluntarios y veterinarios
      */
-    // Mostrar todas las tareas en admin
     public function adminIndex()
     {
-        // Traer todas las tareas con el usuario que las creó
         $tasks = Task::with('user')->latest()->get();
 
-        // Traer todos los voluntarios (ajusta según tu campo de rol)
-        $volunteers = User::where('role', 'voluntario')->get();
+        // Traer voluntarios Y veterinarios (con case correcto)
+        $volunteers = User::whereIn('role', ['Voluntario', 'Veterinario'])->get();
 
-        return view('admin.tasks.index', compact('tasks', 'volunteers'));
+        // Traer disponibilidad futura de cada voluntario/veterinario
+        $availabilities = Availability::whereIn('Usu_documento', $volunteers->pluck('Usu_documento'))
+            ->where('Ava_date', '>=', now()->toDateString())
+            ->orderBy('Ava_date')
+            ->orderBy('Ava_start_time')
+            ->get()
+            ->groupBy('Usu_documento');
+
+        return view('admin.tasks.index', compact('tasks', 'volunteers', 'availabilities'));
     }
 
     /**
-     * CREAR una tarea desde el admin (opcional)
+     * CREAR una tarea desde el admin
      */
     public function store(Request $request)
     {
@@ -78,6 +88,8 @@ class TaskController extends Controller
             'Tar_titulo' => 'required|string|max:255',
             'Tar_descripcion' => 'nullable|string',
             'Tar_fecha_limite' => 'required|date',
+            'Tar_hora' => 'nullable',
+            'Tar_base' => 'nullable|string|max:255',
         ]);
 
         Task::create([
@@ -86,13 +98,17 @@ class TaskController extends Controller
             'Tar_descripcion' => $request->Tar_descripcion,
             'Tar_fecha_asignacion' => now(),
             'Tar_fecha_limite' => $request->Tar_fecha_limite,
+            'Tar_hora' => $request->Tar_hora,
+            'Tar_base' => $request->Tar_base,
             'Tar_estado' => 'Pendiente',
         ]);
 
         return back()->with('success', 'Tarea creada correctamente.');
     }
 
-    // Asignar voluntario a la tarea
+    /**
+     * Asignar voluntario/veterinario a una tarea existente
+     */
     public function assignVolunteer(Request $request, $taskId)
     {
         $request->validate([
@@ -102,13 +118,11 @@ class TaskController extends Controller
         ]);
 
         $task = Task::findOrFail($taskId);
-        $task->Usu_documento = $request->voluntario_doc; // Asignar voluntario
+        $task->Usu_documento = $request->voluntario_doc;
         $task->Tar_fecha_limite = $request->Tar_fecha_limite;
         $task->Tar_hora = $request->Tar_hora;
         $task->save();
 
-        return redirect()->route('admin.tasks.index')->with('success', 'Voluntario asignado correctamente.');
+        return redirect()->route('admin.tasks.index')->with('success', 'Voluntario/Veterinario asignado correctamente.');
     }
-
-    
 }
