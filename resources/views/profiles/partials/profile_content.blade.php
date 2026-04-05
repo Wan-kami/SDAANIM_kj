@@ -6,7 +6,7 @@
 
     <div style="text-align: center; margin-top: 20px;">
         <div style="position: relative; display: inline-block;">
-            <img src="{{ $user->Usu_foto ? asset('img/profiles/' . $user->Usu_foto) : asset('img/default-avatar.png') }}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #2e8b57; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <img src="{{ $user->Usu_foto ? asset('img/profiles/' . $user->Usu_foto) . '?v=' . time() : asset('img/default-avatar.png') }}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #2e8b57; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
             <button onclick="toggleSection('edit-foto-section')" style="position: absolute; bottom: 5px; right: 5px; background: #2e8b57; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">✏️</button>
         </div>
         <h2 style="color: #2c3e50; margin-top: 15px;">{{ $user->name }}</h2>

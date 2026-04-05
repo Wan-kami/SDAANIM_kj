@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Completar tarea (con comentario)
         Route::post('/tareas/{id}/completar', [TaskController::class, 'complete'])->name('tasks.complete');
+        Route::post('/tareas/{id}/comentar', [TaskController::class, 'updateComment'])->name('tasks.updateComment');
 
         // Availability
         Route::get('/disponibilidad', [AvailabilityController::class, 'index'])->name('availability');
@@ -108,6 +109,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/tareas', [TaskController::class, 'index'])->name('tasks');
         Route::patch('/tareas/{id}/estado', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
         Route::post('/tareas/{id}/completar', [TaskController::class, 'complete'])->name('tasks.complete');
+        Route::post('/tareas/{id}/comentar', [TaskController::class, 'updateComment'])->name('tasks.updateComment');
 
         // Availability
         Route::get('/disponibilidad', [AvailabilityController::class, 'index'])->name('availability');

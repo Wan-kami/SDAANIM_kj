@@ -7,6 +7,7 @@ use App\Models\Availability;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
@@ -38,7 +39,25 @@ class TaskController extends Controller
             'Tar_comentario' => $request->get('comentario'),
         ]);
 
-        return back()->with('success', 'Tarea marcada como completada.');
+        return back()->with('success', 'Tarea completada exitosamente.');
+    }
+
+    /**
+     * ACTUALIZAR comentario de la tarea.
+     */
+    public function updateComment(Request $request, $id)
+    {
+        $task = Task::findOrFail($id);
+
+        if ($task->Usu_documento != Auth::user()->Usu_documento) {
+            abort(403, 'No autorizado.');
+        }
+
+        $task->update([
+            'Tar_comentario' => $request->get('comentario'),
+        ]);
+
+        return back()->with('success', 'Comentario de la tarea actualizado exitosamente.');
     }
 
     /**
@@ -92,6 +111,20 @@ class TaskController extends Controller
             'Tar_base' => 'nullable|string|max:255',
         ]);
 
+        // Validar disponibilidad
+        $usuarioRequerido = User::find($request->Usu_documento);
+        if ($usuarioRequerido && in_array($usuarioRequerido->role, ['Voluntario', 'Veterinario'])) {
+            $hasAvailability = Availability::where('Usu_documento', $request->Usu_documento)
+                ->where('Ava_date', $request->Tar_fecha_limite)
+                ->exists();
+
+            if (!$hasAvailability) {
+                throw ValidationException::withMessages([
+                    'Usu_documento' => 'Rol fuera de disponibilidad para la fecha límite indicada.'
+                ]);
+            }
+        }
+
         Task::create([
             'Usu_documento' => $request->Usu_documento,
             'Tar_titulo' => $request->Tar_titulo,
@@ -116,6 +149,20 @@ class TaskController extends Controller
             'Tar_fecha_limite' => 'required|date',
             'Tar_hora' => 'nullable',
         ]);
+
+        // Validar disponibilidad
+        $usuarioRequerido = User::find($request->voluntario_doc);
+        if ($usuarioRequerido && in_array($usuarioRequerido->role, ['Voluntario', 'Veterinario'])) {
+            $hasAvailability = Availability::where('Usu_documento', $request->voluntario_doc)
+                ->where('Ava_date', $request->Tar_fecha_limite)
+                ->exists();
+
+            if (!$hasAvailability) {
+                throw ValidationException::withMessages([
+                    'voluntario_doc' => 'Rol fuera de disponibilidad para la fecha indicada.'
+                ]);
+            }
+        }
 
         $task = Task::findOrFail($taskId);
         $task->Usu_documento = $request->voluntario_doc;

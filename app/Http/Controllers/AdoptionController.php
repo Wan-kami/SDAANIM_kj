@@ -45,7 +45,8 @@ class AdoptionController extends Controller
             'Soli_estado' => 'Pendiente',
         ]);
 
-        return redirect()->route('adopter.requests')->with('success', 'Solicitud enviada correctamente.');
+        return redirect()->route('adopter.requests')
+            ->with('success', 'Solicitud enviada correctamente.');
     }
 
     /**
@@ -57,6 +58,7 @@ class AdoptionController extends Controller
             ->with('animal')
             ->latest()
             ->get();
+
         return view('adoptions.user_index', compact('requests'));
     }
 
@@ -67,55 +69,56 @@ class AdoptionController extends Controller
     {
         $requests = AdoptionRequest::with(['animal', 'user'])->latest()->get();
         $volunteers = \App\Models\User::where('role', 'Voluntario')->get();
+
         return view('admin.adoptions.index', compact('requests', 'volunteers'));
     }
 
     /**
-     * Approve or reject request.
+     * Approve or update request.
      */
     public function approve(Request $request, $id)
     {
         $solicitud = AdoptionRequest::findOrFail($id);
-        
-        $data = $request->validate([
 
-        'estado' => 'required|in:Pendiente,Asignada,En Entrevista,Aprobada,No Apta,Proceso Adopcion,Rechazada,En Proceso',
-            'voluntario_doc' => 'nullable|exists:users,Usu_documento'
+        $data = $request->validate([
+            'estado' => 'required|in:Pendiente,Asignada,En Entrevista,Aprobada,No Apta,Proceso Adopcion,Rechazada,En Proceso',
+            'Usu_documento' => 'nullable|exists:users,Usu_documento'
         ]);
 
+        // Actualizar solicitud
         $solicitud->update([
             'Soli_estado' => $data['estado'],
-            'Soli_voluntario' => $data['voluntario_doc'],
+            'Soli_voluntario' => $data['Usu_documento'] ?? null,
         ]);
 
-        // AUTO-CREATE TASK IF VOLUNTEER ASSIGNED
-        if ($data['voluntario_doc']) {
+        // Crear tarea y notificación si hay voluntario
+        if (!empty($data['Usu_documento'])) {
+
             Task::create([
-                'Usu_documento' => $data['voluntario_doc'],
+                'Usu_documento' => $data['Usu_documento'],
                 'Tar_titulo' => "Seguimiento Adopción: {$solicitud->animal->Anim_nombre}",
                 'Tar_descripcion' => "Realizar seguimiento a la solicitud de adopción de {$solicitud->user->name}. Estado actual: {$data['estado']}",
                 'Tar_fecha_limite' => now()->addDays(3),
                 'Tar_fecha_asignacion' => now(),
                 'Tar_estado' => 'Pendiente',
             ]);
-            
+
             Notification::create([
-                'Usu_documento' => $data['voluntario_doc'],
+                'Usu_documento' => $data['Usu_documento'],
                 'Noti_mensaje' => "Se te ha asignado el seguimiento de la adopción de {$solicitud->animal->Anim_nombre}.",
                 'Noti_fecha' => now(),
                 'Noti_link' => route('volunteer.tasks'),
             ]);
         }
 
-        // If approved, mark animal as adopted
+        // Actualizar estado del animal
         if ($data['estado'] === 'Aprobada') {
             $solicitud->animal->update(['Anim_estado' => 'Adoptado']);
         } else {
-            // If changed from Aprobada to something else, mark as Available
             $solicitud->animal->update(['Anim_estado' => 'Disponible']);
         }
 
-        // NOTIFY ADOPTER
+        // Notificar al adoptante
         Notification::create([
             'Usu_documento' => $solicitud->Usu_documento,
             'Noti_mensaje' => "El estado de tu solicitud de adopción para {$solicitud->animal->Anim_nombre} ha cambiado a: {$data['estado']}",
@@ -123,9 +126,12 @@ class AdoptionController extends Controller
             'Noti_link' => route('adopter.requests'),
         ]);
 
-        return back()->with('success', "Estado de la solicitud actualizado a {$data['estado']}.");
+        return back()->with('success', "Estado actualizado a {$data['estado']}.");
     }
 
+    /**
+     * Assign volunteer manually.
+     */
     public function assignVolunteer(Request $request, $id)
     {
         $request->validate([

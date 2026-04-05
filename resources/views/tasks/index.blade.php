@@ -104,33 +104,34 @@
                         @endif
 
                         {{-- Completar --}}
-                        <form action="{{ route($routePrefix . '.tasks.complete', $task->Tar_id) }}" method="POST">
-                            @csrf
-                            <button style="background:#28a745;color:#fff;padding:8px 16px;border:none;border-radius:6px;cursor:pointer;">
-                                Completar
-                            </button>
-                        </form>
                     </div>
 
-                    {{-- Comentario --}}
-                    <form action="{{ route($routePrefix . '.tasks.complete', $task->Tar_id) }}" method="POST">
+                    <form action="{{ route($routePrefix . '.tasks.complete', $task->Tar_id) }}" method="POST" style="width: 100%; margin-top: 15px; background: #f8f9fa; padding: 15px; border-radius: 8px;">
                         @csrf
-                        <label style="font-size:0.9em;">Comentario (opcional)</label>
-                        <div style="display:flex; gap:10px;">
-                            <textarea name="comentario" rows="2" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ddd;">{{ $task->Tar_comentario }}</textarea>
-                            <button style="background:#28a745;color:#fff;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;">
-                                Enviar
+                        <label style="font-size:0.9em; font-weight: bold; color: #333; display: block; margin-bottom: 5px;">Completar Tarea (Observaciones)</label>
+                        <div style="display:flex; gap:10px; flex-direction: column;">
+                            <textarea name="comentario" rows="2" placeholder="Describe lo que observaste o realizaste (opcional)" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ddd;">{{ $task->Tar_comentario }}</textarea>
+                            <button style="background:#28a745;color:#fff;padding:10px 20px;border:none;border-radius:8px;cursor:pointer; align-self: flex-start; font-weight: bold;">
+                                ✓ Completar Tarea
                             </button>
                         </div>
                     </form>
 
                 @else
-                    {{-- Comentario final --}}
-                    @if($task->Tar_comentario)
-                        <div style="background:#f8f9fa;padding:15px;border-radius:8px;">
-                            <strong>Comentario:</strong> {{ $task->Tar_comentario }}
-                        </div>
-                    @endif
+                    {{-- Editar Comentario --}}
+                    <div style="background:#f8f9fa;padding:15px;border-radius:8px;">
+                        <h4 style="margin: 0 0 10px 0; color: #155724;">✅ Tarea Completada</h4>
+                        <form action="{{ route($routePrefix . '.tasks.updateComment', $task->Tar_id) }}" method="POST">
+                            @csrf
+                            <label style="font-size:0.9em; font-weight: bold;">Tus Observaciones:</label>
+                            <div style="display:flex; gap:10px; margin-top: 5px;">
+                                <textarea name="comentario" rows="2" placeholder="Puedes agregar o corregir tus observaciones." style="flex:1; padding:10px; border-radius:8px; border:1px solid #ddd;">{{ $task->Tar_comentario }}</textarea>
+                                <button style="background:#0ea5e9;color:#fff;padding:10px 20px;border:none;border-radius:8px;cursor:pointer; font-weight: bold;">
+                                    Actualizar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 @endif
 
             </div>
