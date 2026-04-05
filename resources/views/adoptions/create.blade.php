@@ -4,7 +4,7 @@
 
 @section('content')
 <main class="formulario-adopcion" style="max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-    
+    <a href="{{ route('adopta') }}" style="display: inline-block; margin-bottom: 20px; background: #f1f5f9; color: #475569; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold;">← Volver</a>
     <section class="intro-formulario" style="text-align: center; margin-bottom: 30px;">
         <h2>Solicitud de Adopción</h2>
         <p>Formulario para aplicar a la adopción de un animal.</p>

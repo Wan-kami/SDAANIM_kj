@@ -16,6 +16,7 @@
 
 @section('content')
 <main class="donaciones">
+    <a href="{{ route('dashboard') }}" style="display: inline-block; margin-bottom: 20px; background: #f1f5f9; color: #475569; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold;">← Volver al Inicio</a>
     <section class="banner-dona">
         <h2>Donaciones</h2>
         <p>Tu apoyo económico ayuda a cubrir gastos de alimentación y salud de los peluditos.</p>
