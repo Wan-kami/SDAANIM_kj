@@ -11,16 +11,15 @@ use App\Mail\BienvenidaMail;
 
 class RegisterController extends Controller
 {
-    // ✅ MOSTRAR FORMULARIO
+    // MOSTRAR FORMULARIO
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
-    // ✅ ENVIAR CÓDIGO (NO CREA USUARIO)
+
     public function register(Request $request)
     {
-        // 🧪 PRUEBA (puedes quitarla luego)
 
         $data = $request->validate([
             'Usu_documento' => ['required', 'integer', 'unique:users,Usu_documento'],
@@ -79,7 +78,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'Usu_telefono' => $data['Usu_telefono'],
             'Usu_direccion' => $data['Usu_direccion'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'role' => 'Adoptante',
             'status' => 'Activo',
         ]);

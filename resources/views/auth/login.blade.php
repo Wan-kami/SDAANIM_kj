@@ -7,6 +7,89 @@
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mm.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            border-radius: 18px;
+            width: min(520px, 95%);
+            padding: 28px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+            position: relative;
+        }
+        .modal-box h3 {
+            margin-bottom: 12px;
+            color: #1d4f2d;
+            font-size: 1.35rem;
+        }
+        .modal-box p {
+            color: #3f4f45;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+        .modal-box input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d2d8d0;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        .modal-box button {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 999px;
+            background: #2d7d46;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .modal-box button:hover {
+            background: #245c38;
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            border: none;
+            background: transparent;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: #64716b;
+        }
+        .forgot-password-link {
+            margin-top: 0.75rem;
+            display: inline-block;
+            color: #2d7d46;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .modal-error {
+            color: #b91c1c;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+    </style>
 </head>
 <body>
     <!-- HEADER COMPLETO -->
@@ -19,14 +102,15 @@
 
             <nav class="nav-menu">
                 <a href="{{ url('/') }}">Inicio</a>
-                <a href="#">Quienes somos</a>
-                <a href="#">Adopta</a>
-                <a href="#">Dona</a>
+                <a href="{{ route('about') }}">Quienes somos</a>
+                <a href="{{ route('adopta') }}">Adopta</a>
+                <a href="{{ route('products.public') }}">Productos</a>
+                <a href="{{ route('adopter.donation.create') }}">Dona</a>
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Apóyanos ▾</a>
                     <div class="dropdown-content">
-                        <a href="#">Voluntario</a>
-                        <a href="#">Veterinario</a>
+                        <a href="{{ route('inscriptions.volunteer') }}">Voluntario</a>
+                        <a href="{{ route('inscriptions.veterinarian') }}">Veterinario</a>
                     </div>
                 </div>
             </nav>
@@ -49,6 +133,11 @@
             {{ session('success') }}
         </div>
     @endif
+    @if(session('error'))
+        <div style="background: #fee2e2; color: #991b1b; padding: 15px; margin: 0 auto 20px; max-width: 400px; border-radius: 8px; text-align: center; font-weight: bold;">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <!-- LOGIN -->
     <div class="login-container">
@@ -68,12 +157,17 @@
                 <p style="color: red; font-size: 0.8rem;">{{ $message }}</p>
             @enderror
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                required
-            />
+            <div style="position: relative; width: 100%;">
+                <input
+                    type="password"
+                    name="password"
+                    id="login-password"
+                    placeholder="Contraseña"
+                    required
+                    style="width: 100%; padding-right: 42px;"
+                />
+                <button type="button" onclick="togglePasswordVisibility('login-password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: transparent; cursor: pointer; font-size: 1.1rem;">👁️</button>
+            </div>
             @error('password')
                 <p style="color: red; font-size: 0.8rem;">{{ $message }}</p>
             @enderror
@@ -86,6 +180,8 @@
             <button type="submit" class="btn" name="login">Ingresar</button>
         </form>
 
+        <button type="button" class="forgot-password-link" onclick="openModal('forgot')">¿Has olvidado la contraseña?</button>
+
         <div class="social-login">
             <button class="google-btn">Continuar con Google</button>
             <button class="facebook-btn">Continuar con Facebook</button>
@@ -96,5 +192,102 @@
         <br><br>
         <a href="{{ url('/') }}" class="btn volver-btn">Regresar</a>
     </div>
+
+    <div id="forgotModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('forgot')">✖</button>
+            <h3>Recuperar contraseña</h3>
+            <p>Ingresa tu correo o cédula y te enviaremos un código de verificación.</p>
+            <form action="{{ route('password.forgot') }}" method="POST">
+                @csrf
+                <input type="hidden" name="reset_action" value="forgot">
+                <input type="text" name="email_or_document" placeholder="Correo o cédula" value="{{ old('email_or_document') }}" required>
+                @error('email_or_document')<p class="modal-error">{{ $message }}</p>@enderror
+                <button type="submit">Recibir código</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="verifyModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('verify')">✖</button>
+            <h3>Verificar código</h3>
+            <p>Ingresa el código que te enviamos al correo registrado.</p>
+            <form action="{{ route('password.verify') }}" method="POST">
+                @csrf
+                <input type="hidden" name="reset_action" value="verify">
+                <input type="text" name="codigo" placeholder="Código de verificación" required>
+                @error('codigo')<p class="modal-error">{{ $message }}</p>@enderror
+                <button type="submit">Verificar código</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="resetModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('reset')">✖</button>
+            <h3>Nueva contraseña</h3>
+            <p>Escribe tu nueva contraseña y confirma para actualizarla.</p>
+            <form action="{{ route('password.reset') }}" method="POST">
+                @csrf
+                <input type="hidden" name="reset_action" value="reset">
+                <input type="hidden" name="password_reset_user_id" value="{{ old('password_reset_user_id', session('password_reset_user_id')) }}">
+                <input type="hidden" name="password_reset_user_email" value="{{ old('password_reset_user_email', session('password_reset_user_email')) }}">
+                <input type="hidden" name="password_reset_verified" value="{{ old('password_reset_verified', session('password_reset_verified') ? '1' : '') }}">
+                <input type="password" name="password" placeholder="Contraseña nueva" required>
+                @error('password')<p class="modal-error">{{ $message }}</p>@enderror
+                <input type="password" name="password_confirmation" placeholder="Confirmar contraseña" required>
+                <button type="submit">Actualizar contraseña</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function togglePasswordVisibility(fieldId, button) {
+            const input = document.getElementById(fieldId);
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId + 'Modal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId + 'Modal').classList.remove('active');
+        }
+
+        window.addEventListener('click', function(event) {
+            ['forgotModal', 'verifyModal', 'resetModal'].forEach(id => {
+                const modal = document.getElementById(id);
+                if (modal && event.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('showForgotModal'))
+                openModal('forgot');
+            @endif
+            @if(session('showVerifyModal'))
+                openModal('verify');
+            @endif
+            @if(session('showResetModal'))
+                openModal('reset');
+            @endif
+
+            const resetAction = '{{ old('reset_action') }}';
+            if (resetAction === 'forgot') openModal('forgot');
+            if (resetAction === 'verify') openModal('verify');
+            if (resetAction === 'reset') openModal('reset');
+        });
+    </script>
 </body>
 </html>
