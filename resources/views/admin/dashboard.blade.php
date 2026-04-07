@@ -64,6 +64,4 @@
 
 </div>
 
-    <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
-
 @endsection

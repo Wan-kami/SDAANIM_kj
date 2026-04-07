@@ -10,132 +10,6 @@
     <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
     @yield('styles')
-            background: linear-gradient(90deg, #2e8b57, #4caf50);
-            color: white;
-            padding: 12px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .admin-header .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admin-header img {
-            height: 45px;
-        }
-
-        .admin-header h2 {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.8em;
-            margin: 0;
-            color: black;
-        }
-
-        /* BOTÓN NOTIFICACIONES */
-        .notif-toggle {
-            background-color: white;
-            color: #2e8b57;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .notif-toggle:hover {
-            background-color: #f0f0f0;
-        }
-
-        /* BARRA LATERAL DERECHA (Notificaciones) */
-        .notif-sidebar {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100%;
-            background-color: #ffffff;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-            transition: right 0.4s ease;
-            z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .notif-sidebar.active {
-            right: 0;
-        }
-
-        .notif-sidebar h3 {
-            color: #2e8b57;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .notif-sidebar a {
-            display: block;
-            padding: 12px;
-            color: #333;
-            border-bottom: 1px solid #eee;
-            transition: 0.3s;
-            border-radius: 5px;
-            font-size: 0.9em;
-        }
-
-        .notif-sidebar a:hover {
-            background-color: #e9f7ef;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: #2e8b57;
-        }
-
-        /* MAIN CONTENT */
-        main {
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            min-height: 70vh;
-        }
-
-        /* FOOTER */
-        footer {
-            background: #2e8b57;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 40px;
-            font-size: 0.9em;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        @media (max-width: 600px) {
-            .admin-header {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-        }
 </head>
 <body>
     <header class="admin-header">
@@ -149,7 +23,7 @@
                 $notifCount = \App\Models\Notification::where('Usu_documento', Auth::user()->Usu_documento)->whereNull('read_at')->count();
             @endphp
             <div style="position: relative; display: inline-block;">
-                <button type="button" class="notif-toggle" onclick="toggleSidebar()" style="background: none; border: none; font-size: 1.4em; cursor: pointer; padding: 0;">🔔</button>
+                <button type="button" class="notif-toggle" onclick="toggleSidebar()">🔔</button>
                 @if($notifCount > 0)
                     <span id="notifBadge" style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7em; font-weight: bold;">{{ $notifCount }}</span>
                 @endif

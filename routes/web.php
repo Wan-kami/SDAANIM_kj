@@ -9,6 +9,8 @@ use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\ProfileController;
@@ -84,6 +86,22 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/donar', [DonationController::class, 'store'])->name('donation.store');
     });
 
+    // CART ROUTES (all authenticated users)
+    Route::prefix('carrito')->name('cart.')->group(function () {
+        Route::get('/', [CartController::class, 'view'])->name('view');
+        Route::post('/agregar/{prod_id}', [CartController::class, 'add'])->name('add');
+        Route::delete('/remover/{cart_id}', [CartController::class, 'remove'])->name('remove');
+        Route::post('/actualizar-cantidad/{cart_id}', [CartController::class, 'updateQuantity'])->name('update-quantity');
+        Route::post('/vaciar', [CartController::class, 'clear'])->name('clear');
+    });
+
+    // ORDERS ROUTES
+    Route::prefix('pedidos')->name('orders.')->group(function () {
+        Route::post('/confirmar', [OrderController::class, 'checkout'])->name('checkout');
+        Route::get('/{ord_id}', [OrderController::class, 'show'])->name('show');
+        Route::get('/', [OrderController::class, 'history'])->name('history');
+    });
+
     // VOLUNTEER PANEL
     Route::prefix('volunteer')->name('volunteer.')->group(function () {
         Route::get('/dashboard', function () {
@@ -134,6 +152,11 @@ Route::middleware(['auth'])->group(function () {
         })->name('dashboard');
         Route::resource('animals', AnimalController::class);
         Route::resource('products', ProductController::class);
+        
+        // Orders management for admin
+        Route::get('/pedidos', [OrderController::class, 'history'])->name('orders.history');
+        Route::post('/pedidos/{ord_id}/recoger', [OrderController::class, 'markAsPickedUp'])->name('orders.mark-picked-up');
+        Route::post('/pedidos/{ord_id}/cancelar', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
         Route::get('/solicitudes', [AdoptionController::class, 'adminIndex'])->name('requests.index');
         Route::post('/solicitudes/{id}/approve', [AdoptionController::class, 'approve'])->name('requests.approve');
         Route::post('/solicitudes/{id}/assign-volunteer', [AdoptionController::class, 'assignVolunteer'])->name('requests.assignVolunteer');
@@ -154,7 +177,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/donaciones', [DonationController::class, 'adminIndex'])->name('donations.index');
     });
 
-    // Notificaciones (para todos los roles, mostrando solo las del usuario actual)
+    // ADMIN: Task expiration (should run as scheduled command)
+    Route::post('/admin/orders/expire', function () {
+        OrderController::expireOldOrders();
+        return response()->json(['message' => 'Pedidos expirados procesados']);
+    })->middleware('admin')->name('admin.expire-orders');
+
     Route::post('/notificaciones/leer', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notificaciones.leer');
     Route::get('/notifications', function () {
         $notifications = \App\Models\Notification::where('Usu_documento', Auth::user()->Usu_documento)
