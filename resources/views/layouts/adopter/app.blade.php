@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | JKD</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/adopter/dashboard.css') }}">
     @yield('styles')
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <style>
-        .notif-toggle {
             background: none;
             border: none;
             font-size: 20px;
@@ -62,7 +61,6 @@
             cursor: pointer;
             color: #2d7d46;
         }
-    </style>
 </head>
 
 <body>

@@ -5,20 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Esperanza Animal BQ</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
     @yield('styles')
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Open Sans', sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* HEADER ADMIN */
-        .admin-header {
             background: linear-gradient(90deg, #2e8b57, #4caf50);
             color: white;
             padding: 12px 25px;
@@ -145,7 +136,6 @@
                 text-align: center;
             }
         }
-    </style>
 </head>
 <body>
     <header class="admin-header">

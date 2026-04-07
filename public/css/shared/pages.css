@@ -1,0 +1,339 @@
+/* Shared Pages Styles (Welcome, Public Pages) */
+
+/* Welcome/Hero Carousel */
+.swiper {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    width: 100%;
+    max-width: 300px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card p {
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* Modal Animal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* Quienes Somos Page */
+.quienes-somos {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.banner-quienes {
+    background: linear-gradient(135deg, #2d7d46, #4caf50);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(45, 125, 70, 0.2);
+}
+
+.banner-quienes h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+.banner-quienes p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.seccion {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    border-left: 8px solid #2d7d46;
+    transition: 0.3s;
+}
+
+.seccion:hover {
+    transform: translateX(10px);
+}
+
+.seccion h3 {
+    color: #2d7d46;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.seccion p {
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.1em;
+}
+
+.valores ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.valores li {
+    background: #e9f7ef;
+    color: #2d7d46;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.valores li:hover {
+    background: #2d7d46;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Public Role Pages (Volunteer, Veterinarian) */
+.role-page {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px 50px;
+}
+
+.role-hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 30px;
+    background: #e9f7ec;
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.role-hero h1 {
+    margin: 0 0 15px;
+    font-size: 2.4rem;
+    color: #1f4d28;
+}
+
+.role-hero p {
+    line-height: 1.8;
+    color: #34403d;
+    font-size: 1rem;
+}
+
+.role-hero .hero-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.role-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.role-card h3 {
+    margin-top: 0;
+    color: #1f4d28;
+}
+
+.role-card ul {
+    padding-left: 18px;
+    color: #424f47;
+}
+
+.role-card ul li {
+    margin-bottom: 10px;
+}
+
+.role-form {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.role-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #2d7d46;
+}
+
+.role-form input,
+.role-form textarea,
+.role-form select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 18px;
+    border: 1px solid #d6e5d7;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #2b3d34;
+    background: #fbfdf8;
+}
+
+.role-form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.role-form button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 999px;
+    background: #2d7d46;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.role-form button:hover {
+    background: #256038;
+    transform: translateY(-1px);
+}
+
+.alert-success {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 16px 20px;
+    border-radius: 15px;
+    background: #daf7d9;
+    color: #1f4d28;
+    border: 1px solid #c0e7c2;
+}
+
+.alert-error {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 16px 20px;
+    border-radius: 15px;
+    background: #fde6e6;
+    color: #7f1f1f;
+    border: 1px solid #f1c6c6;
+}
+
+/* Veterinarian Page - Different Color Scheme */
+.role-page .role-hero.vet {
+    background: #eaf5fb;
+}
+
+.role-page .role-hero.vet h1 {
+    color: #0f4f6f;
+}
+
+.role-page .role-hero.vet p {
+    color: #2f4f60;
+}
+
+.role-page .role-card.vet h3 {
+    color: #0f4f6f;
+}
+
+.role-page .role-card.vet ul {
+    color: #3b5565;
+}
+
+.role-form.vet label {
+    color: #0f4f6f;
+}
+
+.role-form.vet input,
+.role-form.vet textarea,
+.role-form.vet select {
+    border: 1px solid #d7e6ef;
+    background: #f8fbff;
+    color: #2f4f60;
+}
+
+.role-form.vet button {
+    background: #0f4f6f;
+}
+
+.role-form.vet button:hover {
+    background: #0a3b54;
+}
+
+.alert-success.vet {
+    background: #dfefff;
+    color: #0f4f6f;
+    border: 1px solid #bed6ed;
+}

@@ -1,47 +1,5 @@
 <!-- partials/animal_modal.blade.php -->
-<style>
-/* MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-}
-
-.modal-content {
-    background: white;
-    margin: 5% auto;
-    padding: 25px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 15px;
-    text-align: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.modal-content img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-.close {
-    float: right;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(-20px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-</style>
+    <link rel="stylesheet" href="{{ asset('css/shared/pages.css') }}">
 
 <!-- MODAL -->
 <div id="animalModal" class="modal">

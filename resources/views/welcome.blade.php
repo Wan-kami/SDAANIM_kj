@@ -129,39 +129,7 @@
     </script>
 
     <!-- Estilos -->
-    <style>
-    .swiper {
-        width: 100%;
-        padding: 20px 0;
-    }
-
-    .swiper-slide {
-        display: flex;
-        justify-content: center;
-    }
-
-    .card {
-        width: 100%;
-        max-width: 300px;
-        background: #fff;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        text-align: center;
-    }
-
-    .card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .card p {
-        padding: 10px;
-        font-weight: bold;
-    }
-
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/shared/pages.css') }}">
     @include('partials.animal_modal')
 
 

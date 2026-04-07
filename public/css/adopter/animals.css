@@ -1,0 +1,342 @@
+/* Adopter Animals & Products Styles */
+
+/* CONTENEDOR PRINCIPAL */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.btn-volver {
+    text-decoration: none;
+    background: #374151;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-volver:hover {
+    background: #1f2937;
+}
+
+/* ALERTAS */
+.alert-success {
+    background: #e6f4ea;
+    color: #1e7e34;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert-error {
+    background: #fdecea;
+    color: #b02a37;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+    border-top: 4px solid #d1d5db;
+}
+
+/* FORM */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* BOTÓN */
+.btn-primary {
+    margin-top: 20px;
+    background: #2d7d46;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #25663a;
+}
+
+/* TABLA */
+.table-container {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f3f4f6;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+tr {
+    border-bottom: 1px solid #eee;
+}
+
+/* ESTADO */
+.badge {
+    background: #6b7280;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.8em;
+}
+
+/* ELIMINAR */
+.btn-delete {
+    background: none;
+    border: none;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+/* Adopta Section */
+.adopta-section {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.adopta-filtros {
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    width: max-content;
+    padding: 10px 20px;
+    scrollbar-width: none;
+}
+
+.adopta-filtros::-webkit-scrollbar {
+    display: none;
+}
+
+.filtro-btn {
+    padding: 10px 25px;
+    font-size: 1.05em;
+    border-radius: 30px;
+    border: 2px solid #ff6b6b;
+    color: #ff6b6b;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 700;
+    min-width: 110px;
+    text-align: center;
+    user-select: none;
+    box-shadow: 0 2px 6px rgba(255,107,107,0.3);
+}
+
+.filtro-btn:hover,
+.filtro-btn.activo {
+    background-color: #ff6b6b;
+    color: white;
+    box-shadow: 0 4px 12px rgba(255,107,107,0.6);
+}
+
+.premium-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    justify-items: center;
+    margin-top: 30px;
+}
+
+.premium-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 320px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.premium-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.premium-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 3px solid #2e8b57;
+}
+
+.premium-card div {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.premium-card h3 {
+    margin: 0 0 10px;
+    color: #2e8b57;
+    font-weight: 800;
+}
+
+.premium-card p {
+    color: #555;
+    font-size: 0.95em;
+    margin: 0 0 15px;
+    line-height: 1.4;
+}
+
+.premium-btn-adopter {
+    background: #2e8b57;
+    color: white;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    user-select: none;
+    text-decoration: none;
+}
+
+.premium-btn-adopter:hover {
+    background: #276c45;
+}
+
+.no-animals {
+    grid-column: 1 / -1;
+    padding: 50px;
+    color: #999;
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Public Adopta Page */
+.donaciones {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.banner-dona {
+    text-align: center;
+    background: #fdf2e9;
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+}
+
+.banner-dona h2 {
+    font-family: 'Pacifico', cursive;
+    color: #d35400;
+    font-size: 2.5rem;
+}
+
+.contenido-dona {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.metodo-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.metodo-card img {
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.form-donar {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-card .info {
+    padding: 15px;
+}
+
+.product-card h3 {
+    margin: 0 0 8px;
+    color: #2d7d46;
+}
+
+.product-card p {
+    color: #666;
+    font-size: 0.9em;
+    margin: 0;
+}

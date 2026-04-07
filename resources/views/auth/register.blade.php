@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SDAANIM - Registro</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mm.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth/mm.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth/modal.css') }}">
 </head>
 
 <body>

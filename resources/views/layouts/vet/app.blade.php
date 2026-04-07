@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Panel Veterinario</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vet/dashboard.css') }}">
     @yield('styles')
-    <style>
-        body { margin: 0; font-family: 'Open Sans', sans-serif; background: #f0f7f7; color: #333; overflow-x: hidden; }
         .vet-header { background: linear-gradient(135deg, #1C9F96, #20B2AA); padding: 15px 40px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .logo-text { font-family: 'Pacifico', cursive; font-size: 1.8em; color: white !important; margin: 0; }
         
@@ -27,7 +26,6 @@
         
         main { padding: 40px 20px; max-width: 1200px; margin: 0 auto; min-height: 80vh; }
         footer { background: #20B2AA; color: white; text-align: center; padding: 15px 0; margin-top: 40px; font-size: 0.9em; }
-    </style>
 </head>
 <body>
     <header class="vet-header">

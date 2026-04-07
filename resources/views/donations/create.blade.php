@@ -3,15 +3,7 @@
 @section('title', 'Donaciones | SDAANIM')
 
 @section('styles')
-<style>
-    .donaciones { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-    .banner-dona { text-align: center; background: #fdf2e9; padding: 40px; border-radius: 20px; margin-bottom: 40px; }
-    .banner-dona h2 { font-family: 'Pacifico', cursive; color: #d35400; font-size: 2.5rem; }
-    .contenido-dona { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .metodo-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
-    .metodo-card img { height: 40px; margin-bottom: 10px; }
-    .form-donar { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-</style>
+    <link rel="stylesheet" href="{{ asset('css/adopter/animals.css') }}">
 @endsection
 
 @section('content')

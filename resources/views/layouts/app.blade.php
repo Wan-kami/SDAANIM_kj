@@ -6,21 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | SDAANIM</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/layout.css') }}">
     <style>
-        body {
-            margin: 0;
-            font-family: 'Open Sans', sans-serif;
-            background: #f4f7f6;
-            color: #333;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .admin-header {
-            background: @yield('header-bg', 'linear-gradient(90deg,#4a90e2,#007acc)');
             color: white;
             padding: 12px 25px;
             display: flex;

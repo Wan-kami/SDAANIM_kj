@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Panel Voluntario</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/volunteer/dashboard.css') }}">
     @yield('styles')
-    <style>
-        /* Estilos generales */
-        body {
             margin: 0;
             font-family: 'Open Sans', sans-serif;
             background: #f0f4f8;
@@ -142,7 +140,6 @@
             align-items: center;
             gap: 10px;
         }
-    </style>
 </head>
 <body>
     <header class="vol-header admin-header">

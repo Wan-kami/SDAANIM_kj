@@ -3,17 +3,7 @@
 @section('title', 'Panel Veterinario')
 
 @section('styles')
-<style>
-    .admin-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 20px; }
-    .admin-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(32, 178, 170, 0.1); border: 1px solid #e0fff9; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; position: relative; overflow: hidden; }
-    .admin-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #7FFFD4, #20B2AA); }
-    .admin-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(32, 178, 170, 0.2); }
-    .admin-card h3 { color: #1C9F96; font-size: 1.5em; margin: 15px 0; font-family: 'Open Sans', sans-serif; }
-    .admin-card p { color: #666; font-size: 1em; line-height: 1.6; margin-bottom: 25px; }
-    .admin-card a { display: inline-block; background: #20B2AA; color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; box-shadow: 0 4px 10px rgba(32, 178, 170, 0.3); }
-    .admin-card a:hover { background: #1C9F96; transform: scale(1.05); box-shadow: 0 6px 15px rgba(32, 178, 170, 0.4); }
-    .admin-card .icon { font-size: 50px; background: #e0fff9; width: 90px; height: 90px; line-height: 90px; border-radius: 50%; margin: 0 auto 10px; color: #20B2AA; }
-</style>
+    <link rel="stylesheet" href="{{ asset('css/vet/dashboard.css') }}">
 @endsection
 
 @section('content')

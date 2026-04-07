@@ -4,92 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SDAANIM - Login</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mm.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <style>
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.45);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .modal-overlay.active {
-            display: flex;
-        }
-        .modal-box {
-            background: white;
-            border-radius: 18px;
-            width: min(520px, 95%);
-            padding: 28px;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.18);
-            position: relative;
-        }
-        .modal-box h3 {
-            margin-bottom: 12px;
-            color: #1d4f2d;
-            font-size: 1.35rem;
-        }
-        .modal-box p {
-            color: #3f4f45;
-            line-height: 1.7;
-            margin-bottom: 18px;
-        }
-        .modal-box input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #d2d8d0;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            font-size: 1rem;
-        }
-        .modal-box button {
-            width: 100%;
-            padding: 14px 16px;
-            border: none;
-            border-radius: 999px;
-            background: #2d7d46;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-        .modal-box button:hover {
-            background: #245c38;
-        }
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            border: none;
-            background: transparent;
-            font-size: 1.25rem;
-            cursor: pointer;
-            color: #64716b;
-        }
-        .forgot-password-link {
-            margin-top: 0.75rem;
-            display: inline-block;
-            color: #2d7d46;
-            font-size: 0.95rem;
-            cursor: pointer;
-            text-decoration: underline;
-            background: none;
-            border: none;
-            padding: 0;
-        }
-        .modal-error {
-            color: #b91c1c;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth/mm.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/shared/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth/modal.css') }}">
 </head>
 <body>
     <!-- HEADER COMPLETO -->
