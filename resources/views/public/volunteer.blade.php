@@ -79,10 +79,8 @@
             <label for="ins_tipo_ayuda">¿En qué te gustaría ayudar?</label>
             <select id="ins_tipo_ayuda" name="ins_tipo_ayuda" required>
                 <option value="">Selecciona una opción</option>
-                <option value="Transporte" {{ old('ins_tipo_ayuda') == 'Transporte' ? 'selected' : '' }}>Transporte</option>
-                <option value="Cuidado" {{ old('ins_tipo_ayuda') == 'Cuidado' ? 'selected' : '' }}>Cuidado</option>
-                <option value="Eventos" {{ old('ins_tipo_ayuda') == 'Eventos' ? 'selected' : '' }}>Eventos</option>
-                <option value="Otros" {{ old('ins_tipo_ayuda') == 'Otros' ? 'selected' : '' }}>Otros</option>
+                <option value="Ayuda en el refugio" {{ old('ins_tipo_ayuda') == 'Ayuda en el refugio' ? 'selected' : '' }}>Ayuda en el refugio</option>
+                <option value="Cuidado de los animales" {{ old('ins_tipo_ayuda') == 'Cuidado de los animales' ? 'selected' : '' }}>Cuidado de los animales</option>
             </select>
 
             <label for="ins_comentario">Contanos un poco sobre ti</label>

@@ -164,11 +164,22 @@ class TaskController extends Controller
     {
         $request->validate([
             'Usu_documento' => 'required|exists:users,Usu_documento',
+            'task_type' => 'required|string',
             'Tar_titulo' => 'required|string|max:255',
             'Tar_descripcion' => 'nullable|string',
             'Tar_fecha_limite' => 'required|date',
             'Tar_hora' => 'nullable',
             'Tar_base' => 'nullable|string|max:255',
+            // Campos opcionales para voluntarios
+            'sector' => 'nullable|string',
+            'actividad_voluntario' => 'nullable|string',
+            'num_animales' => 'nullable|integer|min:1',
+            'duracion_horas' => 'nullable|numeric|min:0.5',
+            // Campos opcionales para veterinarios
+            'tipo_atencion' => 'nullable|string',
+            'animal_especifico' => 'nullable|string',
+            'equipamiento' => 'nullable|string',
+            'prioridad' => 'nullable|in:Normal,Alta,Urgente',
         ]);
 
         // Validar disponibilidad
@@ -185,10 +196,35 @@ class TaskController extends Controller
             }
         }
 
+        // Construir descripción detallada con campos específicos
+        $descripcionDetallada = $request->Tar_descripcion ?: '';
+
+        if ($usuarioRequerido->role === 'Voluntario') {
+            $detalles = [];
+            if ($request->sector) $detalles[] = "Sector: {$request->sector}";
+            if ($request->actividad_voluntario) $detalles[] = "Actividad: {$request->actividad_voluntario}";
+            if ($request->num_animales) $detalles[] = "Número de animales: {$request->num_animales}";
+            if ($request->duracion_horas) $detalles[] = "Duración estimada: {$request->duracion_horas} horas";
+
+            if (!empty($detalles)) {
+                $descripcionDetallada .= "\n\nDetalles específicos:\n" . implode("\n", $detalles);
+            }
+        } elseif ($usuarioRequerido->role === 'Veterinario') {
+            $detalles = [];
+            if ($request->tipo_atencion) $detalles[] = "Tipo de atención: {$request->tipo_atencion}";
+            if ($request->animal_especifico) $detalles[] = "Animal específico: {$request->animal_especifico}";
+            if ($request->equipamiento) $detalles[] = "Equipamiento necesario: {$request->equipamiento}";
+            if ($request->prioridad) $detalles[] = "Prioridad: {$request->prioridad}";
+
+            if (!empty($detalles)) {
+                $descripcionDetallada .= "\n\nDetalles veterinarios:\n" . implode("\n", $detalles);
+            }
+        }
+
         Task::create([
             'Usu_documento' => $request->Usu_documento,
             'Tar_titulo' => $request->Tar_titulo,
-            'Tar_descripcion' => $request->Tar_descripcion,
+            'Tar_descripcion' => $descripcionDetallada,
             'Tar_fecha_asignacion' => now(),
             'Tar_fecha_limite' => $request->Tar_fecha_limite,
             'Tar_hora' => $request->Tar_hora,

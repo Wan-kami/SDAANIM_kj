@@ -28,6 +28,7 @@ Route::get('/quienes-somos', function () {
 })->name('about');
 Route::get('/adopta', [AnimalController::class, 'publicIndex'])->name('adopta');
 Route::get('/animal/{id}', [AnimalController::class, 'show'])->name('animal.show');
+Route::get('/api/animal/{id}/medical-history', [AnimalController::class, 'getMedicalHistory'])->name('animal.medical-history');
 Route::get('/productos', [ProductController::class, 'publicIndex'])->name('products.public');
 Route::get('/contacto', function () {
     return view('public.contact');

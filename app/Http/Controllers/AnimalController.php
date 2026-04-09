@@ -165,4 +165,27 @@ class AnimalController extends Controller
 
         return view('home.adopter', compact('animals'));
     }
+
+    /**
+     * Get medical history for an animal (API endpoint)
+     */
+    public function getMedicalHistory($id)
+    {
+        $animal = Animal::findOrFail($id);
+        $histories = $animal->medicalHistories()->latest('Hist_fecha')->get();
+
+        $data = [
+            'histories' => $histories->map(function ($history) {
+                return [
+                    'fecha' => \Carbon\Carbon::parse($history->Hist_fecha)->format('d/m/Y'),
+                    'diagnostico' => $history->Hist_diagnostico,
+                    'tratamiento' => $history->Hist_tratamiento,
+                    'observaciones' => $history->Hist_observaciones,
+                    'vet' => $history->vet ? $history->vet->name : 'No especificado'
+                ];
+            })
+        ];
+
+        return response()->json($data);
+    }
 }

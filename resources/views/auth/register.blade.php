@@ -143,7 +143,7 @@
         }
     </script>
     @if(session('mostrar_modal') || session('error'))
-    <div class="modal-overlay">
+    <div class="modal-overlay active">
         <div class="modal-box">
 
             <h3>Verifica tu correo 📩</h3>
