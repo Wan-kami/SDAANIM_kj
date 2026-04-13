@@ -40,7 +40,12 @@
                             </div>
                         </td>
                         <td style="text-align: center;">
-                            <button class="premium-btn" style="background: #f1f5f9; color: #475569; padding: 6px 15px; font-size: 0.85em;">Configurar</button>
+                            <form action="{{ route('admin.users.toggleStatus', $user->Usu_documento) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="premium-btn" style="background: #f1f5f9; color: #475569; padding: 6px 15px; font-size: 0.85em; cursor: pointer;">
+                                    {{ $user->status == 'Activo' ? 'Desactivar' : 'Activar' }}
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
