@@ -23,12 +23,19 @@
                 <a href="{{ route('about') }}">Quienes somos</a>
                 <a href="{{ route('adopta') }}">Adopta</a>
                 <a href="{{ route('products.public') }}">Productos</a>
-                <a href="{{ route('adopter.donation.create') }}">Dona</a>
                 <div class="dropdown">
-                    <a href="#" class="dropbtn">Apóyanos ▾</a>
+                    <a href="#" class="dropbtn">Comunidad</a>
+                    <div class="dropdown-content">
+                        <a href="{{ route('social') }}">📱 Redes Sociales</a>
+                        <a href="{{ route('awareness') }}">🐾 Concientización</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Apóyanos</a>
                     <div class="dropdown-content">
                         <a href="{{ route('inscriptions.volunteer') }}">Voluntario</a>
                         <a href="{{ route('inscriptions.veterinarian') }}">Veterinario</a>
+                        <a href="{{ route('business') }}">Modelo de Negocio</a>
                     </div>
                 </div>
             </nav>
@@ -70,9 +77,10 @@
                 value="{{ old('Usu_documento') }}"
                 required
                 autofocus
+                style="width: 100%; box-sizing: border-box; margin-bottom: 0.85rem;"
             />
             @error('Usu_documento')
-                <p style="color: red; font-size: 0.8rem;">{{ $message }}</p>
+                <p style="color: red; font-size: 0.8rem; margin-top:-10px; margin-bottom:10px;">{{ $message }}</p>
             @enderror
 
             <div style="position: relative; width: 100%;">

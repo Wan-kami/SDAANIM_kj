@@ -24,12 +24,19 @@
                 <a href="{{ route('about') }}">Quienes somos</a>
                 <a href="{{ route('adopta') }}">Adopta</a>
                 <a href="{{ route('products.public') }}">Productos</a>
-                <a href="{{ route('adopter.donation.create') }}">Dona</a>
                 <div class="dropdown">
-                    <a href="#" class="dropbtn">Apóyanos ▾</a>
+                    <a href="#" class="dropbtn">Comunidad</a>
+                    <div class="dropdown-content">
+                        <a href="{{ route('social') }}">📱 Redes Sociales</a>
+                        <a href="{{ route('awareness') }}">🐾 Concientización</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Apóyanos</a>
                     <div class="dropdown-content">
                         <a href="{{ route('inscriptions.volunteer') }}">Voluntario</a>
                         <a href="{{ route('inscriptions.veterinarian') }}">Veterinario</a>
+                        <a href="{{ route('business') }}">Modelo de Negocio</a>
                     </div>
                 </div>
             </nav>
@@ -56,40 +63,45 @@
                 name="Usu_documento"
                 placeholder="Número de Documento"
                 value="{{ old('Usu_documento') }}"
-                required />
-            @error('Usu_documento') <p style="color:red; font-size:0.8rem;">{{ $message }}</p> @enderror
+                required 
+                style="width: 100%; box-sizing: border-box; margin-bottom: 0.85rem;" />
+            @error('Usu_documento') <p style="color:red; font-size:0.8rem; margin-top:-10px; margin-bottom:10px;">{{ $message }}</p> @enderror
 
             <input
                 type="text"
                 name="name"
                 placeholder="Nombre Completo"
                 value="{{ old('name') }}"
-                required />
-            @error('name') <p style="color:red; font-size:0.8rem;">{{ $message }}</p> @enderror
+                required 
+                style="width: 100%; box-sizing: border-box; margin-bottom: 0.85rem;" />
+            @error('name') <p style="color:red; font-size:0.8rem; margin-top:-10px; margin-bottom:10px;">{{ $message }}</p> @enderror
 
             <input
                 type="email"
                 name="email"
                 placeholder="Correo Electrónico"
                 value="{{ old('email') }}"
-                required />
-            @error('email') <p style="color:red; font-size:0.8rem;">{{ $message }}</p> @enderror
+                required 
+                style="width: 100%; box-sizing: border-box; margin-bottom: 0.85rem;" />
+            @error('email') <p style="color:red; font-size:0.8rem; margin-top:-10px; margin-bottom:10px;">{{ $message }}</p> @enderror
 
             <input
                 type="text"
                 name="Usu_telefono"
                 placeholder="Número de Teléfono"
                 value="{{ old('Usu_telefono') }}"
-                required />
-            @error('Usu_telefono') <p style="color:red; font-size:0.8rem;">{{ $message }}</p> @enderror
+                required 
+                style="width: 100%; box-sizing: border-box; margin-bottom: 0.85rem;" />
+            @error('Usu_telefono') <p style="color:red; font-size:0.8rem; margin-top:-10px; margin-bottom:10px;">{{ $message }}</p> @enderror
 
             <input
                 type="text"
                 name="Usu_direccion"
                 placeholder="Dirección"
                 value="{{ old('Usu_direccion') }}"
-                required />
-            @error('Usu_direccion') <p style="color:red; font-size:0.8rem;">{{ $message }}</p> @enderror
+                required 
+                style="width: 100%; box-sizing: border-box; margin-bottom: 0.85rem;" />
+            @error('Usu_direccion') <p style="color:red; font-size:0.8rem; margin-top:-10px; margin-bottom:10px;">{{ $message }}</p> @enderror
 
             <div style="position: relative; width: 100%; margin-bottom: 0.85rem;">
                 <input
